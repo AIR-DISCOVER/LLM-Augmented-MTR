@@ -1,7 +1,7 @@
 # LLM-Augmented-MTR
 Large Language Models Powered Context-aware Motion Prediction
 
-https://github.com/SEU-zxj/LLM-Augmented-MTR/assets/73421144/962d7dee-9350-4b0f-abe3-9ac9feab697a
+https://github.com/SEU-zxj/LLM-Augmented-MTR/assets/73421144/f0cbbe14-1a9c-496b-87af-89ea78fff087
 
 ## prompt, code, and data will come soon!
 
