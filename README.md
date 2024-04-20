@@ -23,8 +23,9 @@ Motion prediction is among the most fundamental tasks in autonomous driving. Tra
 <img src="./fig/main_figure.png" alt="Our idea" style="zoom:30%;" />
 
 # News
-[2024/04/20] The LLM-Augmented-MTR part of our code was released.
-[2024/03/17] Our paper are released on Arxiv, you can read it by clicking this [link](https://arxiv.org/abs/2403.11057).
+**[2024/04/20]** The LLM-Augmented-MTR part of our code was released.
+
+**[2024/03/17]** Our paper are released on Arxiv, you can read it by clicking this [link](https://arxiv.org/abs/2403.11057).
 
 # Repository Structure
 ```
