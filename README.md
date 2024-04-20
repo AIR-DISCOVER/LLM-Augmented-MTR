@@ -2,6 +2,8 @@
 
 [Xiaoji Zheng](https://seu-zxj.github.io), [Lixiu Wu](https://github.com/wuli-maker), [Zhijie Yan](https://github.com/BJHYZJ), [Yuanrong Tang](https://arxiv.org/search/cs?searchtype=author&query=Tang,+Y), [Hao Zhao](https://sites.google.com/view/fromandto), [Chen Zhong](https://arxiv.org/search/cs?searchtype=author&query=Zhong,+C), [Bokui Chen](https://www.sigs.tsinghua.edu.cn/cbk/main.htm), [Jiangtao Gong](https://air.tsinghua.edu.cn/info/1046/1635.htm)
 
+https://github.com/SEU-zxj/LLM-Augmented-MTR/assets/73421144/f0cbbe14-1a9c-496b-87af-89ea78fff087
+
 <video src="https://github.com/SEU-zxj/LLM-Augmented-MTR/assets/73421144/962d7dee-9350-4b0f-abe3-9ac9feab697a"></video>
 
 # Introduction
