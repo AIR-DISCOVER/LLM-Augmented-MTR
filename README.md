@@ -1,4 +1,4 @@
-<h1 align="center">Large Language Models Powered Context-aware Motion Prediction</h1>
+<h1 align="center">Large Language Models Powered Context-aware <br />Motion Prediction</h1>
 <p align="center">
     <a href="https://arxiv.org/abs/2403.11057"><img alt="Static Badge" src="https://img.shields.io/badge/arxiv-paper-red"></a>
 </p>
