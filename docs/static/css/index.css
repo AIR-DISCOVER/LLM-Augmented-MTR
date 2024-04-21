@@ -1,0 +1,63 @@
+.PageContent {
+    margin: 5vh 5vw;
+    width: 90vw;
+    height: auto;
+}
+
+.MyVideo {
+    margin: 2vh calc((90vw - 960px) / 2);
+}
+
+.code-container p {
+    font-family: 'Courier New', monospace; /* Sets the font to monospace */
+    background-color: #f4f4f4; /* Light grey background */
+    border: 1px solid #ccc; /* Adds a subtle border */
+    padding: 8px; /* Adds space around the text */
+    display: block; /* Makes the paragraph element behave like a block element */
+    white-space: pre-wrap; /* Preserves whitespace and allows normal line breaks */
+    overflow: auto; /* Adds a scrollbar if the content overflows */
+}
+
+
+.AbstractBox {
+    margin: 0 15vw;
+}
+
+.LLMAugmentedMTR {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.IdeaFigure {
+    width: 30vw;
+}
+.IdeaCaption {
+    width: 50vw;
+}
+.IdeaCaptionBox {
+    display: flex;
+    align-items: center;
+}
+
+.PromptEngineeringBox_Upper {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly
+}
+.PromptEngineeringBox_Upper_Left {
+    display: flex;
+    align-items: center;
+}
+.PromptEngineeringBox_Upper_Right {
+    width: 50vw;
+    display: flex;
+    align-items: center;
+}
+
+.PropmtScenarioImage {
+    width: 30vw;
+}
+.PromptEngineeringBox_Lower {
+    margin: 0 3vw;
+}

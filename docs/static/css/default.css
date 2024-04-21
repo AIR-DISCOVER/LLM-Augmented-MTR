@@ -1,0 +1,30 @@
+body {
+    font-family: 'Georgia', serif; /* Elegant, readable typeface */
+    color: #333; /* Darker grey for better readability */
+    line-height: 1.6; /* Increases line spacing for better readability */
+    background-color: #fdfdfd; /* Soft white background */
+}
+
+h1, h2, h3 {
+    font-family: 'Arial', sans-serif; /* Clean and modern looking */
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-size: 2em; /* Larger for main titles */
+}
+
+h2 {
+    font-size: 1.75em; /* Moderately large for section titles */
+}
+
+h3 {
+    font-size: 1.5em; /* Smaller than h2 */
+}
+
+p {
+    font-size: 1em; /* Standard size for body text */
+    margin-top: 0;
+    margin-bottom: 1em;
+}

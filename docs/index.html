@@ -1,25 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>LLM-Augmented-MTR</title>
+    <title>LLM-Augmented-MTR</title>
+    <link rel="stylesheet" href="./static/css/default.css">
+    <link rel="stylesheet" href="./static/css/index.css">
 </head>
 <body>
 
-<h1 align="center">Large Language Models Powered Context-aware Motion Prediction</h1>
-<p align="center">
-    <a href="https://arxiv.org/abs/2403.11057"><img alt="Static Badge" src="https://img.shields.io/badge/arxiv-paper-red"></a>
-</p>
+<div class="PageContent">
+    <h1 align="center">Large Language Models Powered Context-aware Motion Prediction</h1>
 
-<h4 align="center">
-    <a href="https://seu-zxj.github.io/">Xiaoji Zheng</a>,
-    <a href="https://github.com/wuli-maker">Lixiu Wu</a>,
-    <a href="https://github.com/BJHYZJ">Zhijie Yan</a>,
-    <a href="https://arxiv.org/search/cs?searchtype=author&query=Tang,+Y">Yuanrong Tang</a>,
-    <a href="https://sites.google.com/view/fromandto">Hao Zhao</a>,
-    <a href="https://arxiv.org/search/cs?searchtype=author&query=Zhong,+C">Chen Zhong</a>,
-    <a href="https://www.sigs.tsinghua.edu.cn/cbk/main.htm">Bokui Chen</a>,
-    <a href="https://air.tsinghua.edu.cn/info/1046/1635.htm">Jiangtao Gong</a>
-</h4>
+    <h4 align="center">
+        <a href="https://seu-zxj.github.io/">Xiaoji Zheng</a>,
+        <a href="https://github.com/wuli-maker">Lixiu Wu</a>,
+        <a href="https://github.com/BJHYZJ">Zhijie Yan</a>,
+        <a href="mailto:13610510240@139.com">Yuanrong Tang</a>,
+        <a href="https://sites.google.com/view/fromandto">Hao Zhao</a>,
+        <a href="https://arxiv.org/search/cs?searchtype=author&query=Zhong,+C">Chen Zhong</a>,
+        <a href="https://www.sigs.tsinghua.edu.cn/cbk/main.htm">Bokui Chen</a>,
+        <a href="https://air.tsinghua.edu.cn/info/1046/1635.htm">Jiangtao Gong</a>
+    </h4>
+    
+    <h3 align="center">Institution for AI Industry Research, Tsinghua University</h3>
+    
+    <p align="center">
+        <a href="https://arxiv.org/abs/2403.11057"><img alt="Static Badge" src="https://img.shields.io/badge/ArXiv-paper-red?logo=arxiv"></a>
+        <a href="https://github.com/SEU-zxj/LLM-Augmented-MTR"><img alt="Static Badge" src="https://img.shields.io/badge/GitHub-code-white?logo=github">    </a>
+    </p>
+
+    <video width="960" height="540" autoplay loop class="MyVideo">
+        <source src="./static/assets/brief_intro.mp4" type="video/mp4">
+    </video>
+
+    <div class="AbstractBox">
+        <h2 style="text-align: center;">Abstract</h2>
+        <p>
+            Motion prediction is among the most fundamental tasks in autonomous driving. Traditional methods of motion forecasting primarily encode vector information of maps and historical trajectory data of traffic participants, lacking a comprehensive understanding of overall traffic semantics, which in turn affects the performance of prediction tasks. In this paper, we utilized Large Language Models (LLMs) to enhance the global traffic context understanding for motion prediction tasks. We first conducted systematic prompt engineering, visualizing complex traffic environments and historical trajectory information of traffic participants into image prompts—Transportation Context Map (TC-Map), accompanied by corresponding text prompts. Through this approach, we obtained rich traffic context information from the LLM. By integrating this information into the motion prediction model, we demonstrate that such context can enhance the accuracy of motion predictions. Furthermore, considering the cost associated with LLMs, we propose a cost-effective deployment strategy: enhancing the accuracy of motion prediction tasks at scale with 0.7% LLM augmented datasets. Our research offers valuable insights into enhancing the understanding of traffic scenes of LLMs and the motion prediction performance of autonomous driving.
+        </p>
+    </div>
+
+    <h2>LLM-Augmented MTR</h2>
+    <div class="LLMAugmentedMTR">
+        <div>
+            <img src="./static/assets/idea.png" alt="main idea of our work" class="IdeaFigure">
+        </div>
+        <div class="IdeaCaptionBox">
+            <p class="IdeaCaption">
+                We start by converting structured data from a motion prediction dataset into images that resemble bird's-eye views, termed Transportation Context Maps (TC-Maps). These TC-Maps, along with our meticulously crafted text prompts, are then processed by GPT4-V, which outputs context information reflecting its comprehension of the scenario. This context information is subsequently incorporated into an encoder-decoder motion prediction framework.
+            </p>
+        </div>
+    </div>
+
+    <div class="PromptEngineeringBox">
+        <h2>Prompt Engineering</h2>
+        <div class="PromptEngineeringBox_Upper">
+            <div class="PromptEngineeringBox_Upper_Left">
+                <img src="./static/assets/propmt_example_1.png" alt="original scenario 1 for LLM" class="PropmtScenarioImage">
+            </div>
+            <div class="PromptEngineeringBox_Upper_Right code-container">
+                <p>Caption
+1. The ego_red_vehicle is driving in FORWARD lane, it may go STRAIGHT, go STRAIGHT-LEFT or go STRAIGHT-RIGHT in the next 8s. If there is a parking lot nearby, ego_red_vehicle may also make a LEFT-TURN or RIGHT-TURN in the next 8s.
+
+2. The ego_red_vehicle's speed is 13.184m/s. The orange_vehicle is the closest to ego_red_vehicle, its speed is 12.427m/s, and it is in the lower left of the ego_red_vehicle about 5.057m away. The green_vehicle is the second closest to ego_red_vehicle, its speed is 11.281m/s, and it is in the lower right of the ego_red_vehicle about 6.832m away. The blue_vehicle is the third closest to ego_red_vehicle, its speed is 9.771m/s, and it is on the left of the ego_red_vehicle about 11.114m away. 
+
+3. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_vehicle is 'upper'. White striped areas represent crosswalks. Determine the style of the image before answering the question. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+                </p>
+            </div>
+        </div>
+        <div class="PromptEngineeringBox_Lower code-container">
+            <p>LLM's Response
+{
+    "Situation Understanding": "The ego_red_vehicle labeled '0' is proceeding in the FORWARD lane with a speed of 13.184m/s, suggesting it is moving swiftly on a main road or highway. The black_trajectory indicates it has been maintaining a straight path. The orange_vehicle labeled '1' is slightly slower at 12.427m/s and is located in the lower left, which is behind and to the left of the ego vehicle, potentially preparing to overtake. The green_vehicle labeled '2' is also slower at 11.281m/s and positioned in the lower right, which is behind and to the right of the ego vehicle, indicating it is following at a safe distance. The blue_vehicle labeled '3' is further away on the left at 11.114m distance and traveling at 9.771m/s, which could indicate it is in a different lane or preparing to merge. The white striped areas suggest the presence of crosswalks, requiring additional vigilance for pedestrians.", 
+    
+    "Reasoning": "Given the high speed of the ego_red_vehicle and its position in the FORWARD lane, it should primarily continue STRAIGHT, especially if there are no immediate hazards or intersections. If approaching a parking lot, the vehicle has the option to make a LEFT-TURN or RIGHT-TURN, but this should be done with caution considering the proximity of the orange and green vehicles. The speeds of the orange and green vehicles suggest they are not immediate threats, but the ego vehicle should be prepared to adjust its path if they attempt to overtake.", 
+    
+    "Actions": "STRAIGHT, LEFT-TURN, RIGHT-TURN", 
+    
+    "Affordance": "ACCELERATE-ALLOW, LEFT-ALLOW, RIGHT-ALLOW", 
+    
+    "Scenario_name": "ON-STRAIGHT-ROAD, PARKING-LOT"
+}
+            </p>
+        </div>
+    </div>
+
+    <div class="MotionPredictionImprovementBox">
+        <h2>Motion Prediction Improvement</h2>
+        <p>Coming Soon</p>
+    </div>
+
+    <div class="FailureCaseBox">
+        <h2>Failure Cases</h2>
+        <p>Coming Soon</p>
+    </div>
+
+    <div class="PromptBox">
+        <h2>Prompt</h2>
+        <p>Coming Soon</p>
+    </div>
+
+    <div class="ToolBox">
+        <h2>Tools</h2>
+        <p>
+            <a href="">Visualization (Coming Soon)</a> |
+            <a href="https://github.com/SEU-zxj/LLM-Augmented-MTR/tree/main/docs/model_docs#4-submit-to-womd-leaderboard">Waymo Submit</a>
+        </p>
+    </div>
+
+    <div class="TutorialBox">
+        <h2>Tutorial</h2>
+        <p>
+            <a href="">Prompt (Coming Soon)</a> |
+            <a href="https://github.com/SEU-zxj/LLM-Augmented-MTR/blob/main/docs/model_docs/README.md">Model</a>
+
+        </p>
+    </div>
+
+    <div class="BibtexBox code-container">
+        <h2>Bibtex</h2>
+        <p>
+@misc{zheng2024large,
+    title={Large Language Models Powered Context-aware Motion Prediction}, 
+    author={Xiaoji Zheng and Lixiu Wu and Zhijie Yan and Yuanrong Tang and Hao Zhao and Chen Zhong and Bokui Chen and Jiangtao Gong},
+    year={2024},
+    eprint={2403.11057},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}          
+        </p>
+    </div>
+</div>
+
+<p style="text-align: center;">Website template borrowed from <a href="https://voxposer.github.io">VoxPoser</a></p>
 
 </body>
 </html>

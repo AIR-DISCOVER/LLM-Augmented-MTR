@@ -1,20 +1,21 @@
 <h1 align="center">Large Language Models Powered Context-aware <br />Motion Prediction</h1>
 <p align="center">
-    <a href="https://arxiv.org/abs/2403.11057"><img alt="Static Badge" src="https://img.shields.io/badge/arxiv-paper-red"></a>
+  <a href="seu-zxj.github.io/LLM-Augmented-MTR"><img alt="Static Badge" src="https://img.shields.io/badge/website-page-blue"></a>
+  <a href="https://arxiv.org/abs/2403.11057"><img alt="Static Badge" src="https://img.shields.io/badge/ArXiv-paper-red?logo=arxiv"></a>
 </p>
 
 <h4 align="center">
     <a href="https://seu-zxj.github.io/">Xiaoji Zheng</a>,
     <a href="https://github.com/wuli-maker">Lixiu Wu</a>,
     <a href="https://github.com/BJHYZJ">Zhijie Yan</a>,
-    <a href="https://arxiv.org/search/cs?searchtype=author&query=Tang,+Y">Yuanrong Tang</a>,
+    <a href="mailto:13610510240@139.com">Yuanrong Tang</a>,
     <a href="https://sites.google.com/view/fromandto">Hao Zhao</a>,
     <a href="https://arxiv.org/search/cs?searchtype=author&query=Zhong,+C">Chen Zhong</a>,
     <a href="https://www.sigs.tsinghua.edu.cn/cbk/main.htm">Bokui Chen</a>,
     <a href="https://air.tsinghua.edu.cn/info/1046/1635.htm">Jiangtao Gong</a>
 </h4>
 
-https://github.com/SEU-zxj/LLM-Augmented-MTR/assets/73421144/f0cbbe14-1a9c-496b-87af-89ea78fff087
+<video src="https://github.com/SEU-zxj/LLM-Augmented-MTR/assets/73421144/f0cbbe14-1a9c-496b-87af-89ea78fff087"></video>
 
 # Introduction
 
@@ -25,7 +26,7 @@ Motion prediction is among the most fundamental tasks in autonomous driving. Tra
 # News
 **[2024/04/20]** The LLM-Augmented-MTR part of our code was released.
 
-**[2024/03/17]** Our paper are released on Arxiv, you can read it by clicking this [link](https://arxiv.org/abs/2403.11057).
+**[2024/03/17]** Our paper is released on Arxiv, you can read it by clicking this [link](https://arxiv.org/abs/2403.11057).
 
 # Repository Structure
 ```
@@ -103,7 +104,7 @@ Thanks~
 
 if you find our work are useful, we are happy to hear you cite our work!
 
-```latex
+```
 @misc{llm_augmented_mtr,
       title={Large Language Models Powered Context-aware Motion Prediction}, 
       author={Xiaoji Zheng and Lixiu Wu and Zhijie Yan and Yuanrong Tang and Hao Zhao and Chen Zhong and Bokui Chen and Jiangtao Gong},
