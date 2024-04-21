@@ -1,0 +1,202 @@
+Take a deep breath and work on this problem step-by-step. This a frame on the road from a video that I want to upload for you. I want you to act as a professional driver. Your task is to infer the driving intention of the ego_red_vehicle and predict all the possible directions that the ego_red_vehicle can travel in the next 8 seconds while ensuring safety. Base your actions only on the information I provide.
+
+
+# INFORMATION:
+I will provide the speed and the direction of the vehicle you are driving (ego_red_vehicle) and other surrounding objects that may affect your driving behavior.
+
+## ego_red_vehicle: The red ego vehicle(pedestrian, cyclist) you are driving is labeled '0'.
+
+## orange_vehicle: The closest orange vehicle(pedestrian, cyclist) to the ego_red_vehicle you are driving is labeled '1'.
+
+## green_vehicle: The second-closest green vehicle(pedestrian, cyclist) to the ego_red_vehicle you are driving is labeled '2'.
+
+## blue_vehicle: The third-closest blue vehicle(pedestrian, cyclist) to the ego_red_vehicle you are driving is labeled '3'.
+
+## black_trajectory: The 1s history black trajectory(consists of 10 black points) are extended from the ego_red_vehicle you are driving.
+
+## motion_caption: The current state of motion of the object.
+
+## black_bold_road_edge: The map lines on the Motion Prediction Map are composed of lanes and road_edges lines with different thicknesses, black_bold_road_edge is marked by a thicker black line.
+
+
+# ACTION LIBRARY
+These are seven pre-coded actions that the ego_red_vehicle can directly implement, them are based on the head_direction of ego_red_vehicle.
+
+## ACTION_NAME: STATIONARY
+### Description: This function makes the ego_red_vehicle maintain a maximum speed of 2m/s in the next 8s.
+
+## ACTION_NAME: LEFT-TURN
+### Description: This function makes the ego_red_vehicle execute a turn to the left. This typically means the vehicle is driving to the intersection on the left or on a S-shaped road.
+
+## ACTION_NAME: RIGHT-TURN
+### Description: This function makes the ego_red_vehicle execute a turn to the right. This typically means the vehicle is driving to the intersection on the right or on a S-shaped road.
+
+## ACTION_NAME: LEFT-U-TURN
+### Description: This function makes the ego_red_vehicle make a U-turn to the left to reverse its direction. This typically means the vehicle is turning in a tight curve to face the opposite direction.
+
+## ACTION_NAME: STRAIGHT
+### Description: The ego_red_vehicle is driving forward without any deviations to the left or right.
+
+## ACTION_NAME: STRAIGHT-LEFT
+### Description: The ego_red_vehicle is changing to the left of the adjacent lane.
+
+## ACTION_NAME: STRAIGHT-RIGHT
+### Description: The ego_red_vehicle is changing to the right of the adjacent lane.
+
+
+# LANE TYPES
+These are three pre-coded lane types that the ego_red_vehicle is driving.
+
+## LANE_TYPE: LEFT-TURN
+### Description: A lane dedicated for ego_red_vehicle to make left turns. Usually located on the far left side of the road, at intersections or left turns. This typically means the ego_red_vehicle may go STRAIGHT, go STRAIGHT-LEFT, make a LEFT-TURN or LEFT-U-TURN in the next 8s.
+
+## LANE_TYPE: RIGHT-TURN
+### Description: A lane specifically designed for ego_red_vehicle to make right turns. Usually located on the far right side of the road, at intersections or right turns. This typically means the ego_red_vehicle may go STRAIGHT, go STRAIGHT-RIGHT or make a RIGHT-TURN in the next 8s.
+
+## LANE_TYPE: FORWARD
+### Description: A lane for ego_red_vehicle to go straight through an intersection or road section. Usually located in the middle, between the left-turn lane and the right-turn lane. This typically means the ego_red_vehicle may go STRAIGHT, go STRAIGHT-LEFT or go STRAIGHT-RIGHT in the next 8s.
+
+## LANE_TYPE: FORWARD-LEFT-TURN
+### Description: A lane dedicated for ego_red_vehicle to go straight or make left turns. Usually located near the median, at intersections or left turns. This typically means the ego_red_vehicle may go STRAIGHT, go STRAIGHT-LEFT or make a LEFT-TURN in the next 8s.
+
+## LANE_TYPE: FORWARD-RIGHT-TURN
+### Basis: A lane dedicated for ego_red_vehicle to go straight or make right turns. Usually located near the median, at intersections or right turns. This typically means the ego_red_vehicle may go STRAIGHT, go STRAIGHT-RIGHT or make a RIGHT-TURN in the next 8s.
+
+
+# AFFORDANCE
+"AFFORDANCE" in the context of autonomous driving refers to how an object or environment conveys to humans or systems the actions it supports. It describes how an object or environment communicates its potential for interaction and use.
+
+## AFFORDANCE_NAME: LEFT-ALLOW
+### Description: This function makes the ego_red_vehicle execute a turn to the left. This typically means the ego_red_vehicle is on the left-turn lane, traffic light allows, front car turning left.
+
+## AFFORDANCE_NAME: RIGHT-ALLOW
+### Description: This function makes the ego_red_vehicle execute a turn to the right. This typically means the ego_red_vehicle is on the right-turn lane, traffic light allows, front car turning right.
+
+## AFFORDANCE_NAME: ACCELERATE-ALLOW
+### Description: This function makes the ego_red_vehicle increase its speed. This typically means the ego_red_vehicle follow traffic, traffic light is green, road is clear.
+
+## AFFORDANCE_NAME: SLOW-ALLOW
+### Description: This function makes the ego_red_vehicle reduce its speed. This typically means there are obstacles in the front of the ego_red_vehicle, traffic light not allow, road is not clear.
+
+## AFFORDANCE_NAME: LEFT-U-TURN-ALLOW
+### Description: This function makes the ego_red_vehicle execute a U-turn to the left. This typically the ego_red_vehicle is on the left-u-turn lane, traffic light allows, front car turning left.
+
+
+# SURROUNDING SCENARIOS
+The following are the definitions of four surrounding scenarios. ON-STRAIGHT-ROAD and INTERSECTION are mutually exclusive, cannot be output at the same time. The use of 'UNSURE' should be a last resort when the available evidence does not sufficiently support a definitive classification.
+
+## SCENARIO_NAME: ON-STRAIGHT-ROAD
+### Description: Ego_red_vehicle is on a segment of road that is designed for through traffic without options for turning for vehicles or cyclists, but for pedestrians, the road is marked crosswalks. This road segment has clear, continuous lane markings indicating a straight path and lacks any signs, signals, or road geometry that would allow vehicles to legally maneuver into intersecting paths. Road segments with any type of crossing, including pedestrian crosswalks, should not be classified as "ON-STRAIGHT-ROAD" if those crossings provide alternative paths for vehicular traffic.
+
+## SCENARIO_NAME: ON-ROADSIDE
+### Description: Ego_red_vehicle is positioned in an area immediately adjacent to the black_bold_road_edge. This area lacks any lane markings and is separated from the main carriageway by a boundary, such as a curb, line of delineation, or physical barrier. The area may be used for going by cyclists and pedestriansbe, or used for emergency stops, breakdowns by vehicles. Cyclists and pedestrians are actively participating in the traffic flow on the roadside.
+
+## SCENARIO_NAME: INTERSECTION
+### Description: Ego_red_vehicle is located at a junction where different traffic flow paths intersect. The vehicle is at a point where the road segments meet and it has the option to choose between multiple distinct paths: turning left, turning right, or continuing straight. This scenario is characterized by the convergence of paths allowing vehicular traffic from different directions.
+
+## SCENARIO_NAME: PARKING-LOT
+### Description: Ego_red_vehicle is in an area specifically designed for vehicles to be parked. This area is typically separated from the main traffic flow and is characterized by marked parking spaces, parking meters, or signs indicating it is a parking area. The layout often includes multiple rows of parking spaces arranged in a pattern distinct from through lanes. The road surface may be marked with painted lines or symbols to denote individual parking spots and the entrance or exit to the parking lot may include signage, changes in pavement texture, or other indicators that it is a zone separate from the roadway.
+
+
+# DRIVING BEHAVIOR
+Perform three tasks: Situation Understanding, Reasoning, and Action Commanding. Use the provided INFORMATION to guide the ego_red_vehicle's next action in the next 8s.
+1. Situation Understanding:
+- 1) Let's think step by step.
+- 2) The default driving direction of ego_red_vehicle is 'upper', so the top of Motion Prediction Map is the front of the scene.
+- 3) Describe the road scenes where the ego_red_vehicle is driving based on the "Motion Prediction Map", including is it adjacent to black_bold_road_edge, crossroads, through lanes, parking lots and open spaces, etc. And describe the direction and trends of the black_trajectory.
+- 4) Describe the speed, relative position and distance of the three vehicles(orange_vehicle, green_vehicle, blue_vehicle) relative to the head_direction of the ego_red_vehicle based on the "Motion Prediction Map". Then clarify the left and right positions of the ego_red_vehicle.
+- 5) Analyze and describe the ego_red_vehicle's situation using all the given INFORMATION, and mention all the parts of INFORMATION you used in the situation.
+- 6) Describe as concisely as possible and keep the content of this part within 200 words.
+
+2. Reasoning:
+- 1) Let's think step by step.
+- 2) According to the probability of occurrence of the actions, analyze and decide the ego_red_vehicle's next possible actions in next 8s based on the the LANE TYPES, Situation Understanding and seven different actions from ACTION LIBRARY. First analyze the highest possible the action, and then analyze the next smallest possible action.
+- 3) If the ego_red_vehicle is in a special scene from AFFORDANCE and SURROUNDING SCENARIOS, when in a LEFT-U-TURN-ALLOW situation, please add analysis of LEFT-U-TURN behavior. When in PARKING-LOT or INTERSECTION scenarios, please add analysis of turning behavior.
+- 4) Prioritize safety for both drivers and pedestrians.
+- 5) Give clear, detailed instructions for the action, and ensure the continuity of driving operations.
+- 6) Describe as concisely as possible and keep the content of this part within 200 words.
+
+3. Actions:
+- 1) Specify the action using the ACTION LIBRARY format.
+- 2) Follow this structure: "Actions": "ACTION_NAME, ACTION_NAME, ...".
+- 3) Actions should be multiple and based on the probability of the action occurrence to the conditions allowed by safety, but only three are output at most.
+
+4. Affordance:
+- 1) Specify the action using the AFFORDANCE format.
+- 2) Follow this structure: "Affordance": "AFFORDANCE_NAME, AFFORDANCE_NAME, ...".
+- 3) Affordance can be multiple based on scenario understanding and safty.
+
+5. Surrounding Scenarios:
+- 1) ON-ROADSIDE is mainly judged based on black_bold_road_edge. Determine which special scenarios ego_red_vehicle is in based on SURROUNDING SCENARIOS according to the order of SCENARIO_NAME.
+- 2) Specify the action using the SURROUNDING SCENARIOS format.
+- 3) Follow this structure: "Scenario_name": "SCENARIO_NAME, AFFORDANCE_NAME, ...".
+- 4) Scenario_name can be one or multiple based on surrounding scenario understanding. ON-STRAIGHT-ROAD and INTERSECTION cannot be output at the same time, and when the definitions of the four special scenarios are not satisfied, please directly output a separate UNSURE without other SCENARIO_NAME.
+
+
+# EXAMPLE
+The following examples include both POSITIVE EXAMPLES and NEGATIVE EXAMPLES, where POSITIVE EXAMPLES are to use the above definition information to get positive feedback, which is consistent and reasonable with the actual movement situation. On the contrary, NEGATIVE EXAMPLES will miss some important information or make wrong judgments. Pay extra attention to NEGATIVE EXAMPLES to avoid making the same mistakes.
+
+## POSITIVE EXAMPLES
+### POSITIVE EXAMPLE 1
+Q: The ego_red_vehicle is drving in the LEFT-TURN lane. The ego_red_vehicle is drving in the LEFT-TURN lane, it may go STRAIGHT, go STRAIGHT-LEFT, make a LEFT-TURN or LEFT-U-TURN in the next 8s. The ego_red_vehicle's speed is 3.372m/s. The speed of orange_vehicle is 0.09m/s, and it is in the lower right of the ego_red_vehicle and 7.942m away from the ego_red_vehicle. The speed of green_vehicle is 4.739m/s, and it is in the upper left of the ego_red_vehicle and 8.215m away from the ego_red_vehicle. The speed of blue_vehicle is 2.825m/s, and it is in the lower right of the ego_red_vehicle and 9.238m away from the ego_red_vehicle. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_vehicle is 'upper'. Determine the style of the image before answering the question. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+A: {"Situation Understanding": "The head_direction of ego_red_vehicle labeled '0' is 'NORTH', indicated by the black map icon in the upper right corner with the default driving direction being 'upper' on the 'Motion Prediction Map'. The ego_red_vehicle is in a multi-lane road setting with a left turn option ahead, signified by the black_trajectory that is curved towards the left. The orange_vehicle labeled '1', moving at a very slow speed, is positioned in the southeast, or lower right, 7.942m from the ego_red_vehicle. The green_vehicle labeled '2' is in the northwest, or upper left, 8.215m away and is moving faster than the ego_red_vehicle. The blue_vehicle labeled '3' is also in the southeast, or lower right, 9.238m away, traveling slower than the green_vehicle but faster than the ego_red_vehicle.", "Reasoning": "Considering the speeds and positions, the ego_red_vehicle can safely continue its left turn, as the orange and blue vehicles are behind and moving slowly. The higher speed of the green_vehicle indicates it may be crossing the ego_vehicle's path or turning, which requires careful monitoring. The action is most likely to be a LEFT-TURN to follow the LEFT-TURN lane. Then proceeding STRAIGHT is also possible, because the ego_red_vehicle may not reach the intersection where it needs to turn within 8 seconds. maintaining lane discipline and readiness to adjust speed based on the green_vehicle's movement.", "Actions": "LEFT-TURN, STRAIGHT", "Affordance": "SLOW-ALLOW, LEFT-ALLOW, LEFT-U-TURN-ALLOW", "Scenario_name": "INTERSECTION"}
+
+### POSITIVE EXAMPLE 2
+Q: The ego_red_cyclist is driving in an unsure lane, or a non-road scene such as a parking lot or open space, or the ego_red_cyclist is a pedestrian, a complete analysis of seven actions from ACTION LIBRARY is required.The ego_red_cyclist's speed is 0.055m/s. The speed of orange_vehicle is 1.12m/s, and it is in the upper right of the ego_red_cyclist and 7.201m away from the ego_red_vehicle. The speed of green_vehicle is 0.091m/s, and it is in the lower left of the ego_red_cyclist and 9.74m away from the ego_red_cyclist. The speed of blue_vehicle is 0.001m/s, and it is in the upper left of the ego_red_cyclist and 13.002m away from the ego_red_cyclist. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_cyclist is 'upper'. Determine the style of the image before answering the question. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+A: {"Situation Understanding": "The ego_red_cyclist, labeled '0', is moving at a speed of 0.055m/s, indicating a very slow pace consistent with cautious driving, potentially near an intersection. The orange_vehicle (labeled '1'), moving at 1.12m/s, is positioned in the upper right relative to the ego_red_cyclist and is 7.201m away, suggesting it is approaching from an intersecting path but not immediately threatening collision. The green_vehicle (labeled '2'), moving at 0.091m/s, is in the lower left at 9.74m distance, indicating it is behind and to the side, moving almost parallel or slightly towards the ego vehicle, requiring monitoring. The blue_vehicle (labeled '3'), at an almost negligible speed of 0.001m/s and 13.002m away in the upper left, is effectively stationary and does not pose an immediate threat. The black_trajectory shows a consistent path, suggesting steady movement in the current direction without recent turns or lane changes.", "Reasoning": "A RIGHT-TURN could highly likely be considered if the intention is to follow the right turning road edge or prepare for a turn at an upcoming intersection. Given the speeds and positions, the ego_red_cyclist has the option to  maintain its current slow speed to monitor the orange_vehicle's crossing and the green_vehicle's approach, so STATIONARY is also possible.  However, the low speed suggests that the area might be congested or complex, necessitating a cautious approach.", "Actions": "RIGHT-TURN, STATIONARY", "Affordance": "RIGHT-ALLOW, SLOW-ALLOW", "Scenario_name": "INTERSECTION, ON-ROADSIDE"}
+
+### POSITIVE EXAMPLE 3
+Q: The ego_red_pedestrian is driving in an unsure lane, or a non-road scene such as a parking lot or open space, or the ego_red_pedestrian is a pedestrian, a complete analysis of seven actions from ACTION LIBRARY is required. The ego_red_pedestrian's speed is 1.383m/s. Orange_vehicle, green_vehicle, blue_vehicle are the three closest vehicles to the ego_red_pedestrian. The speed of orange_vehicle is 0.163m/s, and it is in the lower right of the ego_red_pedestrian and 7.955m away from the ego_red_pedestrian. The speed of green_vehicle is 0.163m/s, and it is in the upper right of the ego_red_pedestrian and 10.972m away from the ego_red_pedestrian. The speed of blue_vehicle is 13.308m/s, and it is in the upper left of the ego_red_pedestrian and 17.693m away from the ego_red_pedestrian. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_pedestrian is 'upper'. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+A: {"Situation Understanding": "The default driving direction of ego_red_pedestrian is 'upper', so it is pointing upwards on the map. The ego_red_pedestrian labeled 0 is crossing the road in a T-shaped intersection. And the black_trajectory is short. The ego_red_pedestrian is crossing mutiple lanes. Orange_vehicle labeled 1 is in the lower right of the ego_red_pedestrian 7.955 meters away, green_vehicle labeled 2 is in the upper right of the ego_red_pedestrian 10.972 meters away, blue_vehicle labeled 3 is in the upper left of the ego_red_pedestrian 17.693 meters away, so the orange_vehicle, green_vehicle are in the area to the right of the ego_red_pedestrian, and blue_vehicle is in the area to the left of the ego_red_pedestrian. The speed of orange_vehicle is 0.163m/s, so its motion_caption is 'almost still'. The speed of green_vehicle is 0.163m/s, so its motion_caption is 'almost still'. The speed of blue_vehicle is 13.308m/s, so its motion_caption is 'moving slowly'.", "Reasoning": "According to the Motion Prediction Map, the ego_red_pedestrian crossing the road is a pedestrian or a cyclist. The orange_vehicle, green_vehicle and blue_vehicle behind the crosswalk are moving at a very slow speed. They should be waiting for a red light. The ego_red_pedestrian may keep going straight to cross the road in the next 8 seconds, so the next action may be STRAIGHT.", "Actions": "STRAIGHT", "Affordance": "ACCELERATE-ALLOW", "Scenario_name": "INTERSECTION"}
+
+### POSITIVE EXAMPLE 4
+Q: The ego_red_vehicle is drving in the LEFT-TURN lane. The ego_red_vehicle is drving in the LEFT-TURN lane, it may go STRAIGHT, go STRAIGHT-LEFT, make a LEFT-TURN or LEFT-U-TURN in the next 8s. The ego_red_vehicle's speed is 4.71m/s. The orange_vehicle is the closest to ego_red_vehicle, its speed is 0.056m/s, and it is in the lower left of the ego_red_vehicle about 8.732m away. The green_vehicle is the second closest to ego_red_vehicle, its speed is 5.351m/s, and it is in the upper right of the ego_red_vehicle about 10.222m away. The blue_vehicle is the third closest to ego_red_vehicle, its speed is 5.449m/s, and it is in the lower left of the ego_red_vehicle about 10.328m away. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_vehicle is 'upper'. Determine the style of the image before answering the question. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+A: {"Situation Understanding": "The ego_red_vehicle, moving at 4.71m/s and labeled '0', is situated on an intersection with its default driving direction being 'upper' on the Motion Prediction Map. The black_trajectory indicates a history of movement in line with the road, suggesting a consistent speed. The orange_vehicle, almost stationary at 0.056m/s, is positioned lower left at 8.732m distance, likely indicating it's either waiting to merge into traffic or stopped. The green_vehicle, moving at 5.351m/s, is in the upper right at 10.222m distance, indicating it could be crossing the path of or merging with the ego_vehicle's trajectory. The blue_vehicle, also moving swiftly at 5.449m/s, is lower left at 10.328m away, suggesting a possible converging trajectory with the ego_vehicle.", "Reasoning": "Given the ego_vehicle's speed, trajectory and direction of lane lines, The red vehicle is on the leftmost LEFT-TURN lane and has a tendency to turn backwards. To maintain safety, it should not make other turns or go straight. So it should maintain the trend when making a LEFT-U-TURN.", "Actions": "LEFT-U-TURN", "Affordance": "LEFT-ALLOW, SLOW-ALLOW, LEFT-U-TURN-ALLOW", "Scenario_name": "INTERSECTION"}
+
+## NEGATIVE EXAMPLES
+### NEGATIVE EXAMPLE 1
+Q: The ego_red_vehicle's speed is 6.877m/s. The speed of orange_vehicle is 6.627m/s, and it is in the lower left of the ego_red_vehicle and 9.841m away from the ego_red_vehicle. The speed of green_vehicle is 7.135m/s, and it is in the lower right of the ego_red_vehicle and 15.062m away from the ego_red_vehicle. The speed of blue_vehicle is 0.0m/s, and it is in the upper left of the ego_red_vehicle and 18.003m away from the ego_red_vehicle. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_vehicle is 'upper'. Determine the style of the image before answering the question. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+A: {"Situation Understanding": "The head_direction of the ego_red_vehicle labeled '0' is 'NORTH,' indicated by the red arrow pointing to the top of the map. The ego_red_vehicle is traveling at a high speed of 6.877m/s on a straight road. The orange_vehicle, labeled '1,' is moving at a slightly lower speed of 6.627m/s and is positioned in the back left (southwest) of the ego_red_vehicle, approximately 9.841m away, indicating a potential overtaking scenario. The green_vehicle, labeled '2,' is at a higher speed of 7.135m/s and located in the back right (southeast) of the ego_red_vehicle, about 15.062m away, which could also be approaching to overtake. The blue_vehicle, labeled '3,' is stationary and located in the front left (northwest) of the ego_red_vehicle, 18.003m away, posing no immediate threat.", "Reasoning": "Given the high speed of the ego_red_vehicle and the proximity and relative speeds of the orange and green vehicles, the safest actions for the next 8 seconds would involve maintaining the current lane and speed to prevent any collisions, as the other vehicles are likely to overtake. Turning or changing lanes would be unsafe due to the speed and position of orange and green vehicles. Therefore, the ego_red_vehicle should remain STRAIGHT. A LEFT-TURN or RIGHT-TURN is unsafe given the current speeds and distances of the surrounding vehicles.", "Actions": "STRAIGHT", "Affordance": "LEFT-ALLOW, ACCELERATE-ALLOW", "Scenario_name": "INTERSECTION"}
+#### ERROR ANALYSIS 1
+- True "Actions": "LEFT-TURN"
+- Error of Consideration for Lane Type: The ego_red_vehicle is driving in the left-turning lane, the most appropriate action within the next 8 seconds is to continue with a left turn.
+- Disregard for Provided Example: Not align with the provided examples, which clearly demonstrate how to incorporate all the necessary information to make a well-informed decision regarding the vehicle's actions.
+
+### NEGATIVE EXAMPLE 2
+Q: The ego_red_vehicle's speed is 10.325m/s. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_vehicle is 'upper'. Determine the style of the image before answering the question. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+A: {"Situation Understanding": "The ego_red_vehicle is moving at a high speed of 10.325m/s indicating it's likely on a major thoroughfare or a highway. Given the default direction is 'upper', and aligning this with a standard north-oriented map, the vehicle is moving north. The black trajectory indicates a straight path, suggesting a stable, high-speed course without recent major direction changes.", "Reasoning": "Considering the high speed and straight trajectory, the ego_red_vehicle should maintain its lane and speed if there are no immediate hazards. If the road ahead is clear and the conditions allow, continuing at the current speed is advised. However, safety is the priority; thus, any action must be ready to adapt to sudden changes such as obstacles or changes in traffic flow.", "Actions": "STRAIGHT", "Affordance": "RIGHT-ALLOW, SLOW-ALLOW", "Scenario_name": "INTERSECTION"}
+#### ERROR ANALYSIS 2
+- True "Actions": "RIGHT-TURN, STRAIGHT"
+- Inaccurate Action Based on Speed: Response suggestions to maintain high speed and straight trajectory based purely on ego_red_vehicle's current speed. However, it does not take into account the surrounding environment or the possibility of other vehicles or obstacles, ego_red_vehicle can drive to the traffic intersection and perform RIGHT-TURN within the next 8s.
+
+### NEGATIVE EXAMPLE 3
+Q: The ego_red_vehicle is drving in the LEFT-TURN lane, it may go STRAIGHT, go STRAIGHT-LEFT, make a LEFT-TURN or LEFT-U-TURN in the next 8s.The ego_red_vehicle's speed is 4.096m/s. The orange_vehicle is the closest to ego_red_vehicle, its speed is 4.853m/s, and it is in the lower left of the ego_red_vehicle about 12.539m away. The green_vehicle is the second closest to ego_red_vehicle, its speed is 12.858m/s, and it is in the lower left of the ego_red_vehicle about 12.818m away. The blue_vehicle is the third closest to ego_red_vehicle, its speed is 15.416m/s, and it is in the upper right of the ego_red_vehicle about 13.584m away. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_vehicle is 'upper'. White striped areas represent crosswalks. Determine the style of the image before answering the question. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+A: {"Situation Understanding": "The ego_red_vehicle, labeled '0', is positioned in the LEFT-TURN lane, traveling at 4.096m/s. The black_trajectory suggests a stable movement towards the intersection. Orange_vehicle '1' and green_vehicle '2' are both in the lower left, suggesting they are behind and to the left of the ego vehicle, with orange_vehicle moving slightly faster than the ego vehicle, and green_vehicle moving at a significantly higher speed. Blue_vehicle '3' is in the upper right, indicating it is ahead and to the right of the ego vehicle, traveling at a high speed and possibly crossing the intersection or turning. The crosswalks are indicated by white stripes, and all vehicles are in proximity to the intersection.", "Reasoning": "Considering the lane type and vehicle speeds, the ego_red_vehicle has several options. A LEFT-TURN is feasible as it aligns with the lane type and the vehicle's current speed. Proceeding STRAIGHT is also an option, though it requires monitoring the green_vehicle's high speed. A LEFT-U-TURN is less likely due to the speeds and positions of the other vehicles. The ego vehicle must be aware of the blue_vehicle potentially crossing its path and the high-speed green_vehicle from behind.", "Actions": "LEFT-TURN, STRAIGHT", "Affordance": "LEFT-ALLOW, SLOW-ALLOW, LEFT-U-TURN-ALLOW", "Scenario_name": "INTERSECTION"}
+#### ERROR ANALYSIS 3
+- True "Actions": "LEFT-U-TURN, LEFT-TURN"
+- Incomplete Consideration of Surrounding Vehicle Speeds: The original analysis did not adequately account for the green_vehicle's high speed, which could safely allow a LEFT-U-TURN by the ego_red_vehicle if timed correctly, and the blue_vehicle's position and speed as it may cross the intersection.
+- Misjudgment of Action Safety: The potential risk posed by the blue_vehicle crossing the path was overestimated, leading to the exclusion of LEFT-U-TURN as a safe option.
+- Neglect of Lane Usage: The ego_red_vehicle's presence in the LEFT-TURN lane suggests the possibility of a LEFT-U-TURN, which was not fully considered in relation to the lane's intended usage and the current traffic conditions.
+
+### NEGATIVE EXAMPLE 4
+Q: The ego_red_vehicle is drving in the FORWARD lane, it may go STRAIGHT, go STRAIGHT-LEFT or go STRAIGHT-RIGHT in the next 8s. If there is a parking lot nearby, ego_red_vehicle may also make a LEFT-TURN or RIGHT-TURN in the next 8s.The ego_red_vehicle's speed is 0.468m/s. The orange_vehicle is the closest to ego_red_vehicle, its speed is 0.0m/s, and it is in the lower right of the ego_red_vehicle about 7.804m away. The green_vehicle is the second closest to ego_red_vehicle, its speed is 0.0m/s, and it is in the upper left of the ego_red_vehicle about 8.07m away. The blue_vehicle is the third closest to ego_red_vehicle, its speed is 0.0m/s, and it is in the lower left of the ego_red_vehicle about 8.542m away. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_vehicle is 'upper'. White striped areas represent crosswalks. Determine the style of the image before answering the question. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+A: {"Situation Understanding": "The ego_red_vehicle, labeled '0', is positioned in a FORWARD lane with options to go STRAIGHT, STRAIGHT-LEFT, or STRAIGHT-RIGHT. Its speed is very low at 0.468m/s, suggesting it may be preparing to stop or maneuver. The orange_vehicle, labeled '1', is stationary in the lower right, which is directly ahead of the ego_vehicle given the 'upper' direction is forward. It poses a potential obstruction. The green_vehicle, labeled '2', also stationary, is located in the upper left, which would be to the ego_vehicle's rear left, indicating no immediate interaction. The blue_vehicle, labeled '3', is stationary in the lower left, or to the ego_vehicle's right, which could indicate it is parked or waiting. The proximity of all vehicles suggests a congested or slow-moving traffic scenario. The white striped areas indicate crosswalks, requiring additional caution for potential pedestrian movement.", "Reasoning": "Given the stationary nature of nearby vehicles and the ego_vehicle's low speed, it is likely in a slow traffic situation, possibly approaching a congested intersection or preparing for a parking maneuver. The safety of all road users is paramount, so the ego_vehicle should maintain its low speed and be prepared to stop. The ego_vehicle should proceed STRAIGHT unless the stationary orange_vehicle in its path necessitates a stop or a lane change. Given the lack of motion from surrounding vehicles, a lane change to the left or right is feasible if done cautiously.", "Actions": "STRAIGHT, STRAIGHT-LEFT, STRAIGHT-RIGHT", "Affordance": "LEFT-TURN, SLOW-ALLOW, RIGHT-ALLOW", "Scenario_name": "ON-STRAIGHT-ROAD, PARKING-LOT"}
+#### ERROR ANALYSIS 4
+- True "Actions": "RIGHT-TURN, LEFT-TURN, STRAIGHT-LEFT"
+- Missed Parking Lot Consideration: If there is a parking lot nearby, the ego_red_vehicle may also make a LEFT-TURN or RIGHT-TURN in the next 8 seconds. The provided answer did not consider the possibility of nearby parking lots, which could have influenced the decision to include LEFT-TURN and RIGHT-TURN in potential actions.
+- Low Speed of Ego Vehicle Not Fully Explored: The ego_red_vehicle's low speed could indicate more than just an approach to stop or maneuver; it could also suggest the potential for turning, which was not contemplated in the provided answer.
+- Lack of Multiple Action Options: Providing multiple actions that are safe under the conditions, but the provided answer only focused on going straight and potential lane changes without considering the turns that could be made safely due to the stationary nature of surrounding vehicles and the presence of a parking lot.
+
+### NEGATIVE EXAMPLE 5
+Q: The ego_red_pedestrian is adjacent to black_bold_road_edge, it is walking ON-ROADSIDE, or the ego_red_vehicle is a pedestrian, a complete analysis of seven actions from ACTION LIBRARY is required.The ego_red_pedestrian's speed is 1.834m/s. The orange_vehicle is the closest to ego_red_pedestrian, its speed is 0.056m/s, and it is in the upper left of the ego_red_pedestrian about 6.682m away. The green_vehicle is the second closest to ego_red_pedestrian, its speed is 0.673m/s, and it is in the lower right of the ego_red_pedestrian about 7.069m away. The blue_vehicle is the third closest to ego_red_pedestrian, its speed is 0.0m/s, and it is in the lower right of the ego_red_pedestrian about 10.093m away. The black map icon in the upper right corner of the 'Motion Prediction Map' identify the right, lower, left, and upper directions of the 'Motion Prediction Map', the default driving direction of ego_red_pedestrian is 'upper'. White striped areas represent crosswalks. Determine the style of the image before answering the question. Please answer according to the FORMAT format based on the 'Motion Prediction Map' provided and the above information.
+A: {"Situation Understanding": "The ego_red_pedestrian, moving at 1.834m/s and labeled 'P', is at a crosswalk with the default direction being 'upper' on the Motion Prediction Map. The black_trajectory consists of a few points directly behind the pedestrian, indicating recent movement across the crosswalk. The orange_vehicle, labeled '1', is moving at a very slow speed of 0.056m/s and is positioned in the upper left, about 6.682m away from the pedestrian, likely waiting or moving slowly through the intersection. The green_vehicle, labeled '2', with a speed of 0.673m/s, is in the lower right approximately 7.069m away, suggesting it is behind the pedestrian. The blue_vehicle, labeled '3', is stationary and located also in the lower right about 10.093m away from the pedestrian. The crosswalk is clearly marked, and the pedestrian is in the process of crossing.", "Reasoning": "Considering the pedestrian's current speed and direction, along with the slow speeds and positions of the nearby vehicles, the pedestrian can safely continue to cross to the other side. The vehicles appear to be yielding, as indicated by their positions and speeds. The ego_red_pedestrian should continue STRAIGHT to complete the crossing as quickly and safely as possible, minimizing the time spent in the roadway and potential risk.", "Actions": "STRAIGHT", "Affordance": "ACCELERATE-ALLOW, LEFT-ALLOW, RIGHT-ALLOW", "Scenario_name": "ON-ROADSIDE, INTERSECTION"}
+#### ERROR ANALYSIS 5
+- True "Actions": "STRAIGHT, RIGHT-TURN, LEFT-TURN"
+- Incomplete Consideration of Action Library: The original answer only included the action "STRAIGHT" for the ego_red_pedestrian. However, the instruction manual indicates that multiple actions should be considered that are safe and possible within the given context.
+- Lane Type and Scenario Overlooked: The scenario implies that the ego_red_pedestrian is in an unsure lane or non-road scene like a parking lot or open space. This suggests that the pedestrian is not restricted to typical road traffic patterns and may have the flexibility to turn left or right as well as go straight, which was not considered in the original answer.
+- Misinterpretation of Vehicle Speeds and Positions: Although the original analysis correctly notes the slow speeds and positions of the orange and green vehicles, it failed to deduce that these conditions also allow for safe turns. Given that the blue_vehicle is stationary, the pedestrian has even more options to maneuver safely.
+
+
+# FORMAT
+You should only respond in the format as described below. Use the provided DRIVING BEHAVIOR to answer.
+{"Situation Understanding": "......", "Reasoning": "......", "Actions": "ACTION_NAME, ACTION_NAME, ...", "Affordance": "AFFORDANCE_NAME, AFFORDANCE_NAME, ...", , "Scenario_name": "SCENARIO_NAME"}
