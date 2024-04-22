@@ -84,7 +84,10 @@ we conducted a comprehensive prompt design and experiment and summarised six pro
 
 ## LLM-Augmented Propmt
 
-
+- [Tutorial](https://github.com/SEU-zxj/LLM-Augmented-MTR/blob/main/docs/prompt_docs/README.md)
+  - [Install](https://github.com/SEU-zxj/LLM-Augmented-MTR/tree/main/docs/prompt_docs#1-install)
+  - [Generate TC-Map](https://github.com/SEU-zxj/LLM-Augmented-MTR/tree/main/docs/prompt_docs#2-generate-tc-map)
+  - [Get Context from GPT4-V](https://github.com/SEU-zxj/LLM-Augmented-MTR/tree/main/docs/prompt_docs#3-get-context-from-gpt4-v)
 
 ## LLM-Augmented MTR
 
