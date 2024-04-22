@@ -1,6 +1,6 @@
 <h1 align="center">Large Language Models Powered Context-aware <br />Motion Prediction</h1>
 <p align="center">
-  <a href="seu-zxj.github.io/LLM-Augmented-MTR"><img alt="Static Badge" src="https://img.shields.io/badge/website-page-blue"></a>
+  <a href="https://seu-zxj.github.io/LLM-Augmented-MTR"><img alt="Static Badge" src="https://img.shields.io/badge/website-page-blue"></a>
   <a href="https://arxiv.org/abs/2403.11057"><img alt="Static Badge" src="https://img.shields.io/badge/ArXiv-paper-red?logo=arxiv"></a>
 </p>
 
