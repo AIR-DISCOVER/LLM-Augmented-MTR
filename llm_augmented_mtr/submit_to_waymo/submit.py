@@ -25,7 +25,10 @@ info_dict = {
     'authors': ['Author_1', "Author_2"],
     'affiliation': 'Input Your Affiliation',
     'method_link': 'https://input.your.method.link',
-    'uses_lidar_data': False # if your method use Lidar data, you may set this field to True
+    'uses_lidar_data': False, # if your method use Lidar data, you may set this field to True
+    'uses_camera_data': False,
+    'uses_public_model_pretraining': False,
+    'num_model_parameters': "71M"
 } 
 
 
@@ -51,6 +54,9 @@ def generate_protobuf(output_dir, file_name, other_params, list, process_bar, in
     submission.affiliation = info_dict['affiliation']
     submission.method_link = info_dict['method_link']
     submission.uses_lidar_data = info_dict['uses_lidar_data']
+    submission.uses_camera_data = info_dict['uses_camera_data']
+    submission.uses_public_model_pretraining = info_dict['uses_public_model_pretraining']
+    submission.num_model_parameters = info_dict['num_model_parameters']
     MOTION_PREDICTION = True
     scenario_id = []
     object_id = []

@@ -80,6 +80,16 @@ we conducted a comprehensive prompt design and experiment and summarised six pro
 
 ![prompt design suggestions](./fig/promptDesign.png)
 
+# LLM Integration
+
+Considering the high cost of API calls and inspired by methods in the field of semi-supervised learning, we generated the transportation context information for the whole dataset via cost-effective depolyment strategy.
+
+![](./fig/knn.jpg)
+
+The LLM Integration module is inspired by [CogBERT](https://github.com/PosoSAgapo/cogbert). We set a learnable gate tensor and considered the number of layers to conduct the integration.
+
+![](./fig/llm-augmented-mtr-integration-module.jpg)
+
 # Get Start
 
 ## LLM-Augmented Propmt
