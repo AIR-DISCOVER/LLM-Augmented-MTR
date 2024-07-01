@@ -1,4 +1,5 @@
 <h1 align="center">Large Language Models Powered Context-aware <br />Motion Prediction</h1>
+<h2 align="center">IROS 2024</h2>
 <p align="center">
   <a href="https://seu-zxj.github.io/LLM-Augmented-MTR"><img alt="Static Badge" src="https://img.shields.io/badge/website-page-blue"></a>
   <a href="https://arxiv.org/abs/2403.11057"><img alt="Static Badge" src="https://img.shields.io/badge/ArXiv-paper-red?logo=arxiv"></a>
@@ -24,6 +25,8 @@ Motion prediction is among the most fundamental tasks in autonomous driving. Tra
 <img src="./fig/main_figure.png" alt="Our idea" style="zoom:30%;" />
 
 # News
+**[2024/06/30]** Our paper was accepted by IROS 2024.
+
 **[2024/04/20]** The LLM-Augmented-MTR part of our code was released.
 
 **[2024/03/17]** Our paper is released on Arxiv, you can read it by clicking this [link](https://arxiv.org/abs/2403.11057).
