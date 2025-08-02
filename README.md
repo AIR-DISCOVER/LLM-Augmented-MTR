@@ -3,6 +3,8 @@
 <p align="center">
   <a href="https://seu-zxj.github.io/LLM-Augmented-MTR"><img alt="Static Badge" src="https://img.shields.io/badge/website-page-blue"></a>
   <a href="https://arxiv.org/abs/2403.11057"><img alt="Static Badge" src="https://img.shields.io/badge/ArXiv-paper-red?logo=arxiv"></a>
+  <a href="https://atomicviz.web.app/page-graph/SEU-zxj-LLM-Augmented-MTR/Overview"><img alt="Static Badge" src="https://img.shields.io/badge/AtomicViz-Architecture_Vis-blue">
+</a>
 </p>
 
 <h4 align="center">
@@ -25,6 +27,8 @@ Motion prediction is among the most fundamental tasks in autonomous driving. Tra
 <img src="./fig/main_figure.png" alt="Our idea" style="zoom:30%;" />
 
 # News
+**[2025/08/02]** Thanks [briandiloreto](https://github.com/briandiloreto), now you can visualize our model via [AtomicViz](https://atomicviz.web.app/page-graph/SEU-zxj-LLM-Augmented-MTR/Overview), we recommend everyone to try AtomicViz!!!
+
 **[2024/06/30]** Our paper was accepted by IROS 2024.
 
 **[2024/04/20]** The LLM-Augmented-MTR part of our code was released.
